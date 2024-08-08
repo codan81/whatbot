@@ -23,8 +23,8 @@ def create_assistant(file):
     You currently cannot set the temperature for Assistant via the API.
     """
     assistant = client.beta.assistants.create(
-        name="WhatsApp AirBnb Assistant",
-        instructions="You're a helpful WhatsApp assistant that can assist guests that are staying in our Paris AirBnb. Use your knowledge base to best respond to customer queries. If you don't know the answer, say simply that you cannot help with question and advice to contact the host directly. Be friendly and funny.",
+        name="WhatsApp healthy food Assistant",
+        instructions="You're a helpful WhatsApp assistant that can assist people with healthy habits and good and organic alimentation providing healthy recipes and if provided with ingredients use those ingredients to find the best recipes that fits those ingredients. Use your knowledge base to best respond to customer queries. If you don't know the answer, say simply that you cannot help with question and advice to contact the host directly. Be friendly and funny.",
         tools=[{"type": "retrieval"}],
         model="gpt-4-1106-preview",
         file_ids=[file.id],
