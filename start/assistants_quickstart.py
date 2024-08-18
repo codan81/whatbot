@@ -32,9 +32,9 @@ def create_assistant(file):
     assistant = client.beta.assistants.create(
         name="WhatsApp healthy food Assistant",
         instructions="You're a helpful WhatsApp assistant that can assist people with healthy habits and good and organic alimentation providing healthy recipes and if provided with ingredients use those ingredients to find the best recipes that fits those ingredients. Use your knowledge base to best respond to customer queries. If you don't know the answer, say simply that you cannot help with question and advice to contact the host directly. Be friendly and funny.",
-        tools=[{"type": "retrieval"}],
+        tools=[{"type": "file_search"}],
         model="gpt-4-1106-preview",
-        file_ids=[file.id],
+        #file_ids=[file.id],
     )
     return assistant
 
@@ -82,7 +82,7 @@ def generate_response(message_body, wa_id, name):
     )
 
     # Run the assistant and get the new message
-    new_message = run_assistant(thread)
+    new_message = run_assistant(thread, assistant.id)
     print(f"To {name}:", new_message)
     return new_message
 
@@ -90,10 +90,10 @@ def generate_response(message_body, wa_id, name):
 # --------------------------------------------------------------
 # Run assistant
 # --------------------------------------------------------------
-def run_assistant(thread):
+def run_assistant(thread, assistant_id):
     # Retrieve the Assistant
-    assistant = client.beta.assistants.retrieve("asst_7Wx2nQwoPWSf710jrdWTDlfE")
-    print(assistant)
+    assistant = client.beta.assistants.retrieve(assistant_id) #"asst_7Wx2nQwoPWSf710jrdWTDlfE"
+    print(assistant_id)
     # Run the assistant
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
