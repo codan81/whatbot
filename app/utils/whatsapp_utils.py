@@ -2,7 +2,7 @@ import logging
 from flask import current_app, jsonify
 import json
 import requests
-from app.services.openai_service import generate_response, reset_threads
+from app.services.openai_service import generate_response
 
 
 import re
