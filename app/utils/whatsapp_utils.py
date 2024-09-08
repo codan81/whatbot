@@ -2,9 +2,9 @@ import logging
 from flask import current_app, jsonify
 import json
 import requests
-from app.services.openai_service import generate_response
+from app.services.openai_service import generate_response, reset_threads
 
-# from app.services.openai_service import generate_response
+
 import re
 
 
@@ -79,16 +79,22 @@ def process_whatsapp_message(body):
     message = body["entry"][0]["changes"][0]["value"]["messages"][0]
     message_body = message["text"]["body"]
 
+    logging.info(f"Received message from {name} ({wa_id}): {message_body}")
+
+    
+
     # TODO: implement custom function here
     # response = generate_response(message_body)
 
     # OpenAI Integration
     response = generate_response(message_body, wa_id, name)
+    logging.info(f"Generated response: {response}")
     response = process_text_for_whatsapp(response)
-
+    logging.info(f"Processed response for WhatsApp: {response}")
+    
     data = get_text_message_input(current_app.config["RECIPIENT_WAID"], response)
     send_message(data)
-
+    logging.info("Message sent to WhatsApp")
 
 def is_valid_whatsapp_message(body):
     """
