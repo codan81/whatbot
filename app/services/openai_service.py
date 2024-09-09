@@ -253,28 +253,28 @@ def generate_response(message_body, wa_id, name):
     return new_message
 
 # Define bilingual questions
-QUESTIONS = {
-    "en": [
-        "Hello! Welcome to this personalized health pilot program created by AHO!, Are you ready to start this journey toward a healthier and more balanced lifestyle? ",
-        "To better guide your personalized goals, we kindly ask you to take a few moments to answer some key questions and help us learn more about you. Do you agree?",
-        "What is your  name?",
-        "What is your age?",
-        "What is your weight?",
-        "What is your height?",
-        "Do you have any dietary restrictions?",
-        "What are your fitness goals?"
-    ],
-    "es": [
-        "¡Hola! Bienvenido a este programa piloto de salud personalizado creado por AHO. ¿Estás listo para comenzar este viaje hacia un estilo de vida más saludable y equilibrado? ",
-        "Para guiar mejor tus objetivos personalizados, te pedimos amablemente que tomes unos momentos para responder algunas preguntas clave y ayudarnos a conocerte mejor. Estas de acuerdo?",
-        "¿Cuál es tu nombre?",
-        "¿Cuál es tu edad?",
-        "¿Cuál es tu peso?",
-        "¿Cuál es tu altura?",
-        "¿Tienes alguna restricción dietética?",
-        "¿Cuáles son tus objetivos de fitness?"
-    ]
-}
+# QUESTIONS = {
+#     "en": [
+#         "Hello! Welcome to this personalized health pilot program created by AHO!, Are you ready to start this journey toward a healthier and more balanced lifestyle? ",
+#         "To better guide your personalized goals, we kindly ask you to take a few moments to answer some key questions and help us learn more about you. Do you agree?",
+#         "What is your  name?",
+#         "What is your age?",
+#         "What is your weight?",
+#         "What is your height?",
+#         "Do you have any dietary restrictions?",
+#         "What are your fitness goals?"
+#     ],
+#     "es": [
+#         "¡Hola! Bienvenido a este programa piloto de salud personalizado creado por AHO. ¿Estás listo para comenzar este viaje hacia un estilo de vida más saludable y equilibrado? ",
+#         "Para guiar mejor tus objetivos personalizados, te pedimos amablemente que tomes unos momentos para responder algunas preguntas clave y ayudarnos a conocerte mejor. Estas de acuerdo?",
+#         "¿Cuál es tu nombre?",
+#         "¿Cuál es tu edad?",
+#         "¿Cuál es tu peso?",
+#         "¿Cuál es tu altura?",
+#         "¿Tienes alguna restricción dietética?",
+#         "¿Cuáles son tus objetivos de fitness?"
+#     ]
+# }
 
 def detect_language(text):
     spanish_chars = "ñáéíóú"
@@ -286,3 +286,5 @@ def detect_language(text):
         if word in text.lower():
             return "es"
     return "en"
+
+    
