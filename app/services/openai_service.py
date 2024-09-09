@@ -242,7 +242,7 @@ def generate_response(message_body, wa_id, name):
         thread = client.beta.threads.retrieve(thread_id)
     
     # Save user response to Airtable
-    save_user_response(wa_id, message_body)
+    save_user_response(wa_id, question_index, message_body)
     
     message = client.beta.threads.messages.create(
         thread_id=thread_id,
