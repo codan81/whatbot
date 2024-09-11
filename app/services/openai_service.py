@@ -183,7 +183,7 @@
 
 
 from openai import OpenAI
-from app.services.airtable_service import check_if_thread_exists, store_thread, save_user_response
+from app.services.airtable_service import check_if_thread_exists, store_thread, save_user_response, get_user_responses
 from dotenv import load_dotenv
 import os
 import time
@@ -240,6 +240,10 @@ def generate_response(message_body, wa_id, name):
     else:
         logging.info(f"Retrieving existing thread for {name} with wa_id {wa_id}")
         thread = client.beta.threads.retrieve(thread_id)
+
+    # Determine the current question index based on the user's progress
+    user_responses = get_user_responses(wa_id)
+    question_index = len(user_responses)
     
     # Save user response to Airtable
     save_user_response(wa_id, question_index, message_body)
@@ -253,28 +257,28 @@ def generate_response(message_body, wa_id, name):
     return new_message
 
 # Define bilingual questions
-# QUESTIONS = {
-#     "en": [
-#         "Hello! Welcome to this personalized health pilot program created by AHO!, Are you ready to start this journey toward a healthier and more balanced lifestyle? ",
-#         "To better guide your personalized goals, we kindly ask you to take a few moments to answer some key questions and help us learn more about you. Do you agree?",
-#         "What is your  name?",
-#         "What is your age?",
-#         "What is your weight?",
-#         "What is your height?",
-#         "Do you have any dietary restrictions?",
-#         "What are your fitness goals?"
-#     ],
-#     "es": [
-#         "¡Hola! Bienvenido a este programa piloto de salud personalizado creado por AHO. ¿Estás listo para comenzar este viaje hacia un estilo de vida más saludable y equilibrado? ",
-#         "Para guiar mejor tus objetivos personalizados, te pedimos amablemente que tomes unos momentos para responder algunas preguntas clave y ayudarnos a conocerte mejor. Estas de acuerdo?",
-#         "¿Cuál es tu nombre?",
-#         "¿Cuál es tu edad?",
-#         "¿Cuál es tu peso?",
-#         "¿Cuál es tu altura?",
-#         "¿Tienes alguna restricción dietética?",
-#         "¿Cuáles son tus objetivos de fitness?"
-#     ]
-# }
+QUESTIONS = {
+    "en": [
+        "Hello! Welcome to this personalized health pilot program created by AHO!, Are you ready to start this journey toward a healthier and more balanced lifestyle? ",
+        "To better guide your personalized goals, we kindly ask you to take a few moments to answer some key questions and help us learn more about you. Do you agree?",
+        "What is your  name?",
+        "What is your age?",
+        "What is your weight?",
+        "What is your height?",
+        "Do you have any dietary restrictions?",
+        "What are your fitness goals?"
+    ],
+    "es": [
+        "¡Hola! Bienvenido a este programa piloto de salud personalizado creado por AHO. ¿Estás listo para comenzar este viaje hacia un estilo de vida más saludable y equilibrado? ",
+        "Para guiar mejor tus objetivos personalizados, te pedimos amablemente que tomes unos momentos para responder algunas preguntas clave y ayudarnos a conocerte mejor. Estas de acuerdo?",
+        "¿Cuál es tu nombre?",
+        "¿Cuál es tu edad?",
+        "¿Cuál es tu peso?",
+        "¿Cuál es tu altura?",
+        "¿Tienes alguna restricción dietética?",
+        "¿Cuáles son tus objetivos de fitness?"
+    ]
+}
 
 def detect_language(text):
     spanish_chars = "ñáéíóú"

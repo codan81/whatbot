@@ -1,8 +1,8 @@
 # main.py
-#from app.services.openai_service import reset_threads
-import logging
 
+import logging
 from app import create_app
+
 
 # Call the reset_threads function at the beginning for testing purposes
 #reset_threads()
