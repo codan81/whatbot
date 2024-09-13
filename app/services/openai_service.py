@@ -184,6 +184,7 @@
 
 from openai import OpenAI
 from app.services.airtable_service import check_if_thread_exists, store_thread, save_user_response, get_user_responses
+from app.utils.save_chat_func import save_conversation
 from dotenv import load_dotenv
 import os
 import time
@@ -243,7 +244,14 @@ def generate_response(message_body, wa_id, name):
 
     # Determine the current question index based on the user's progress
     user_responses = get_user_responses(wa_id)
-    question_index = len(user_responses)
+    
+     # If responses exist, determine question index
+    if user_responses:
+        question_index = len(user_responses)
+        logging.info(f"Question Index based on responses: {question_index}")
+    else:
+        question_index = 0  # Start from the first question if no responses found
+        logging.info(f"No responses found. Starting from question index 0.")
     
     # Save user response to Airtable
     save_user_response(wa_id, question_index, message_body)
@@ -254,6 +262,10 @@ def generate_response(message_body, wa_id, name):
         content=message_body,
     )
     new_message = run_assistant(thread, name)
+
+     # Save the conversation (user message and bot response)
+    save_conversation(wa_id, message_body, new_message)
+
     return new_message
 
 # Define bilingual questions
@@ -290,5 +302,3 @@ def detect_language(text):
         if word in text.lower():
             return "es"
     return "en"
-
-    
